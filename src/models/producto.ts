@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import { DocumentoUnidadMedida } from './unidad-medida';
-import { DocumentoMedidaProducto } from './medida-producto';
-import { DocManejadorPrecio } from './manejador-precio';
+import { DocMedidaPrecio } from './medida-precio';
+import { DocColorImagen } from './color-imagen';
 
 interface AtribProducto {
   producto: string
@@ -13,9 +12,8 @@ interface AtribProducto {
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
-  unidadMedida?: [DocumentoUnidadMedida];
-  medidaProducto?: [DocumentoMedidaProducto];
-  manejadorPrecio?: [DocManejadorPrecio];
+  medidaPrecio?: [DocMedidaPrecio];
+  colorImagen?: [DocColorImagen];
 }
 
 interface DocProducto extends mongoose.Document {
@@ -28,9 +26,8 @@ interface DocProducto extends mongoose.Document {
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
-  unidadMedida?: [DocumentoUnidadMedida];
-  medidaProducto?: [DocumentoMedidaProducto];
-  manejadorPrecio?: [DocManejadorPrecio];
+  medidaPrecio?: [DocMedidaPrecio];
+  colorImagen?: [DocColorImagen];
 }
 
 interface ModelProducto extends mongoose.Model<DocProducto> {
@@ -75,22 +72,16 @@ const schemaProducto = new mongoose.Schema(
       type: mongoose.Schema.Types.Date,
       default: Date.now,
     },
-    unidadMedida: [
+    medidaPrecio: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UnidadMedida',
+        ref: 'MedidaPrecio',
       },
     ],
-    medidaProducto: [
+    colorImagen: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'MedidaProducto',
-      },
-    ],
-    manejadorPrecio: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ManejadorPrecio',
+        ref: 'ColorImagen',
       },
     ],
   },

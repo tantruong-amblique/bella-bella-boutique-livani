@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 interface AtribManejadorPrecio {
   unidadMedidaId: string;
+  medidaProductoId: string;
   descripcion: string;
   tipoPrecio: string;
   precio: number;
@@ -10,6 +11,7 @@ interface AtribManejadorPrecio {
 
 export interface DocManejadorPrecio extends mongoose.Document {
   unidadMedidaId: string;
+  medidaProductoId: string;
   descripcion: string;
   tipoPrecio: string;
   precio: number;
@@ -23,6 +25,10 @@ interface ModelManejadorPrecio extends mongoose.Model<DocManejadorPrecio> {
 const schemaManejadorPrecio = new mongoose.Schema(
   {
     unidadMedidaId: {
+      type: String,
+      required: true,
+    },
+    medidaProductoId: {
       type: String,
       required: true,
     },
