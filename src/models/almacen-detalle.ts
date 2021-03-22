@@ -10,6 +10,8 @@ export interface AtribAlmacenDetalle {
   managerPrecioId: string;
   descripcionPrecio: string;
   literalUnidadMedida: string;
+  literalMedidaProducto: string;
+  colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
   fechaUltimaCompra: Date;
@@ -26,6 +28,8 @@ export interface DocAlmacenDetalle extends mongoose.Document {
   managerPrecioId: string;
   descripcionPrecio: string;
   literalUnidadMedida: string;
+  literalMedidaProducto: string;
+  colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
   fechaUltimaCompra: Date;
@@ -71,6 +75,14 @@ const schemaAlmacenDetalle = new mongoose.Schema(
       required: true,
     },
     literalUnidadMedida: {
+      type: String,
+      required: true,
+    },
+    literalMedidaProducto: {
+      type: String,
+      required: true,
+    },
+    colorId: {
       type: String,
       required: true,
     },

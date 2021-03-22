@@ -1,24 +1,24 @@
 import { Request, Response } from 'express';
 //import { validarSolicitud, SolicitudIncorrecta } from '@eloyk/comun';
-import { MedidaProducto } from '../../models/medida-producto';
+import { Color } from '../../models/color';
 import { Tienda } from '../../models/tienda';
 
-export const registrarMedidaProducto = async (req: Request, res: Response) => {
+export const registrarColor = async (req: Request, res: Response) => {
     const { 
       descripcion,
-      literal,
+      colorImagen,
     } = req.body;
 
     const tienda = await Tienda.findOne({nombreTienda: 'bella bella boutique'});
 
-    const medidaProducto = MedidaProducto.build({ 
+    const color = Color.build({ 
       descripcion,
-      literal,
+      color: colorImagen,
       tiendaId: tienda!.id,
       usuarioIdAlta: req.usuarioActual!.id,
       emailUsuarioAlta: req.usuarioActual!.email 
     });
-    await medidaProducto.save();
+    await color.save();
 
-    res.status(201).send(medidaProducto);
+    res.status(201).send(color);
 }

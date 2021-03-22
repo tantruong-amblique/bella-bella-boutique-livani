@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
-import { DocVenta } from '@eloyk/comun';
+//import { DocVenta } from '@eloyk/comun';
 
 interface AtribFacturaVenta {
-  venta: DocVenta;
+//  venta: DocVenta;
   tipoFactura: string;
   descuento?: number;
   fechaAlta?: Date;
 }
 
 export interface DocFacturaVenta extends mongoose.Document {
-  venta: DocVenta;
+//  venta: DocVenta;
   tipoFactura: string;
   descuento?: number;
   fechaAlta?: Date;
@@ -21,10 +21,10 @@ interface ModelFacturaVenta extends mongoose.Model<DocFacturaVenta> {
 
 const schemaFacturaVenta = new mongoose.Schema(
   {
-    venta: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Venta',
-    },
+    // venta: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Venta',
+    // },
     tipoFactura: {
       type: String,
       required: true,
@@ -50,7 +50,7 @@ const schemaFacturaVenta = new mongoose.Schema(
 
 schemaFacturaVenta.statics.build = (atrib: AtribFacturaVenta) => {
   return new FacturaVenta({
-    venta: atrib.venta,
+//    venta: atrib.venta,
     tipoFactura: atrib.tipoFactura,
     descuento: atrib.descuento,
   });

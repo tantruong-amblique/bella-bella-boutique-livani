@@ -16,6 +16,8 @@ import { productoRouter } from './routes/producto-routes';
 import { manejadorPrecioRouter } from './routes/manejador-precio-routes';
 import { almacenRouter } from './routes/almacen-routes';
 import { compraRouter } from './routes/compra-routes';
+import { colorRouter } from './routes/color-routes';
+import { medidaProductoRouter } from './routes/medida-producto-routes';
 
 const app = express();
 app.set('trust proxy', true);
@@ -59,6 +61,12 @@ app.use(almacenRouter);
 
 //Routes de compra
 app.use(compraRouter);
+
+//Routes de compra
+app.use(colorRouter);
+
+//Routes de compra
+app.use(medidaProductoRouter);
 
 app.all('*', async (req, res) => {
   throw new ErrorNoEncontrado();

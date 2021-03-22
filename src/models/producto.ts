@@ -91,12 +91,6 @@ const schemaProducto = new mongoose.Schema(
         ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
-        for (let u in ret.unidadMedida) {
-          delete ret.unidadMedida[u].tiendaId;
-        }
-        for (let u in ret.medidaProducto) {
-          delete ret.medidaProducto[u].tiendaId;
-        }
       },
     },
   }

@@ -7,6 +7,8 @@ interface AtribProductoCompra {
   tipoProducto: string;
   unidadMedidaId: string;
   literal: string;
+  literalMedidaProducto: string;
+  colorId: string;
   manejadorPrecioId: string;
   descripcionManejadorPrecio: string;
   tipoPrecio: string;
@@ -24,6 +26,8 @@ export interface DocProductoCompra extends mongoose.Document {
   tipoProducto: string;
   unidadMedidaId: string;
   literal: string;
+  literalMedidaProducto: string;
+  colorId: string;
   manejadorPrecioId: string;
   descripcionManejadorPrecio: string;
   tipoPrecio: string;
@@ -58,6 +62,14 @@ const schemaProductoCompra = new mongoose.Schema(
       required: true,
     },
     literal: {
+      type: String,
+      required: true,
+    },
+    literalMedidaProducto: {
+      type: String,
+      required: true,
+    },
+    colorId: {
       type: String,
       required: true,
     },
@@ -115,6 +127,8 @@ schemaProductoCompra.statics.build = (atrib: AtribProductoCompra) => {
     tipoProducto: atrib.tipoProducto,
     unidadMedidaId: atrib.unidadMedidaId,
     literal: atrib.literal,
+    literalMedidaProducto: atrib.literalMedidaProducto,
+    colorId: atrib.colorId,
     manejadorPrecioId: atrib.manejadorPrecioId,
     descripcionManejadorPrecio: atrib.descripcionManejadorPrecio,
     tipoPrecio: atrib.tipoPrecio,

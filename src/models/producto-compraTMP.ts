@@ -6,6 +6,8 @@ interface AtribProductoCompraTMP {
   tipoProducto: string;
   unidadMedidaId: string;
   literal: string;
+  literalMedidaProducto: string;
+  colorId: string;
   manejadorPrecioId: string;
   descripcionManejadorPrecio: string;
   tipoPrecio: string;
@@ -23,6 +25,8 @@ export interface DocProductoCompra extends mongoose.Document {
   tipoProducto: string;
   unidadMedidaId: string;
   literal: string;
+  literalMedidaProducto: string;
+  colorId: string;
   manejadorPrecioId: string;
   descripcionManejadorPrecio: string;
   tipoPrecio: string;
@@ -57,6 +61,14 @@ const schemaProductoCompraTMP = new mongoose.Schema(
       required: true,
     },
     literal: {
+      type: String,
+      required: true,
+    },
+    literalMedidaProducto: {
+      type: String,
+      required: true,
+    },
+    colorId: {
       type: String,
       required: true,
     },

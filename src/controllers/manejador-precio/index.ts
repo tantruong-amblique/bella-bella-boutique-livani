@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { Producto } from '../../models/producto';
+import { MedidaPrecio } from '../../models/medida-precio';
 
 export const indexManejadorPrecio = async (req: Request, res: Response) => {
-  const manejadorprecio = await Producto.find()
-    .populate('manejadorPrecio')
-    .populate('unidadMedida');
+  const medidaPrecio = await MedidaPrecio.find()
+    .populate('unidadMedida')
+    .populate('DocumentoMedidaProducto')
+    .populate('DocManejadorPrecio')
     
-  res.send(manejadorprecio);
+  res.send(medidaPrecio);
 }

@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { UnidadMedida } from '../../models/unidad-medida'
+import { MedidaProducto } from '../../models/medida-producto'
 import { ErrorNoEncontrado } from '../../errores/error-no-encontrado';
 
-export const verUnidadMedida = async (req: Request, res: Response) => {
-    const unidadMedida = await UnidadMedida.findById(req.params.id);
+export const verMedidaProducto = async (req: Request, res: Response) => {
+    const medidaProducto = await MedidaProducto.findById(req.params.id);
     
-    if (!unidadMedida) {
+    if (!medidaProducto) {
       throw new ErrorNoEncontrado();
     }
 
-    res.send(unidadMedida);
+    res.send(medidaProducto);
   }

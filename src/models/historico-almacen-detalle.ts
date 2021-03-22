@@ -11,6 +11,8 @@ export interface AtribHistoricoAlmacenDetalle {
   managerPrecioId: string;
   descripcionPrecio: string;
   literalUnidadMedida: string;
+  literalMedidaProducto: string;
+  colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
   fechaUltimaCompra: Date;
@@ -27,6 +29,8 @@ export interface DocHistoricoAlmacenDetalle extends mongoose.Document {
   managerPrecioId: string;
   descripcionPrecio: string;
   literalUnidadMedida: string;
+  literalMedidaProducto: string;
+  colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
   fechaUltimaCompra: Date;
@@ -72,6 +76,14 @@ const schemaHistoricoAlmacenDetalle = new mongoose.Schema(
       required: true,
     },
     literalUnidadMedida: {
+      type: String,
+      required: true,
+    },
+    literalMedidaProducto: {
+      type: String,
+      required: true,
+    },
+    colorId: {
       type: String,
       required: true,
     },

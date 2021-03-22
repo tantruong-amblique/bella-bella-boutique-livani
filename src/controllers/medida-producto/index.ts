@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { UnidadMedida } from '../../models/unidad-medida';
+import { MedidaProducto } from '../../models/medida-producto';
 
-export const indexUnidadMedida = async (req: Request, res: Response) => {
-  const unidadMedida = await UnidadMedida.find();
+export const indexMedidaProducto = async (req: Request, res: Response) => {
+  const medidaProducto = await MedidaProducto.find();
 
-  res.send(unidadMedida);
+  res.send(medidaProducto);
 }

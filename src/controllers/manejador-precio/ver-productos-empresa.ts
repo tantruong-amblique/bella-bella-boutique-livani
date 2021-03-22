@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import { ErrorNoEncontrado } from '../../errores/error-no-encontrado';
-import { ManejadorPrecio } from '../../models/manejador-precio';
+import { MedidaPrecio } from '../../models/medida-precio';
 
 export const verManejadorPrecio = async (req: Request, res: Response) => {
-    const manejadorPrecio = await ManejadorPrecio.findById(req.params.id);
+    const medidaPrecio = await MedidaPrecio.findById(req.params.id)
+      .populate('unidadMedida')
+      .populate('DocumentoMedidaProducto')
+      .populate('DocManejadorPrecio')
 
-    if (!manejadorPrecio) {
+    if (!medidaPrecio) {
       throw new ErrorNoEncontrado();
     }
 
-    res.send(manejadorPrecio);
+    res.send(medidaPrecio);
   }

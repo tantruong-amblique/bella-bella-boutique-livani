@@ -1,22 +1,22 @@
 import { Request, Response } from 'express';
 import { ErrorNoEncontrado } from '../../errores/error-no-encontrado';
-import { UnidadMedida } from '../../models/unidad-medida';
+import { MedidaProducto } from '../../models/medida-producto';
 
-export const actualizarUnidadMedida = async (req: Request, res: Response) => {
+export const actualizarMedidaProducto = async (req: Request, res: Response) => {
     const {
       descripcion,
       literal
     } = req.body;
-    const unidadMedida = await UnidadMedida.findById(req.params.id);
+    const medidaProducto = await MedidaProducto.findById(req.params.id);
 
-    if (!unidadMedida) {
+    if (!medidaProducto) {
       throw new ErrorNoEncontrado();
     }
-    unidadMedida.set({
+    medidaProducto.set({
       descripcion,
       literal
     });
-    await unidadMedida.save();
+    await medidaProducto.save();
 
-    res.status(201).send(unidadMedida);
+    res.status(201).send(medidaProducto);
 }
