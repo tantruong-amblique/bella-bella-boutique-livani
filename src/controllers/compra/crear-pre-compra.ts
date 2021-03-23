@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { SolicitudIncorrecta } from '../../errores/solicitud-incorrecta';
+import { Color } from '../../models/color';
 import { CompraTMP } from '../../models/compraTMP';
 import { Establecimiento } from '../../models/establecimiento';
 import { ManejadorPrecio } from '../../models/manejador-precio';
+import { MedidaProducto } from '../../models/medida-producto';
 import { Producto } from '../../models/producto';
 import { ProductoCompraTMP } from '../../models/producto-compraTMP';
 import { Proveedor } from '../../models/proveedor';
@@ -16,6 +18,7 @@ export const crearPreCompra = async (req: Request, res: Response) => {
     proveedorId,
     productoId,
     unidadMedidaId,
+    MedidaProductoId,
     manjadorPrecioId,
     cantidadProducto,
   } = req.body;
@@ -56,6 +59,20 @@ export const crearPreCompra = async (req: Request, res: Response) => {
     );
   }
 
+  const medidaProducto = await MedidaProducto.findById(MedidaProductoId);
+  if (!medidaProducto) {
+    throw new SolicitudIncorrecta(
+      'Esta medida no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
+    );
+  }
+
+  const color = await Color.findById(MedidaProductoId);
+  if (!color) {
+    throw new SolicitudIncorrecta(
+      'Este color no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
+    );
+  }
+
   const manejadorPrecio = await ManejadorPrecio.findById(manjadorPrecioId);
   if (!manejadorPrecio) {
     throw new SolicitudIncorrecta(
@@ -72,10 +89,12 @@ export const crearPreCompra = async (req: Request, res: Response) => {
   if (!productoCompraTMP) {
     productoCompraTMP = ProductoCompraTMP.build({
       productoId: producto.id,
-      descripcionProducto: producto.descripcion,
+      descripcionProducto: producto.producto,
       tipoProducto: producto.tipoProducto,
       unidadMedidaId: unidadMedida.id,
       literal: unidadMedida.literal,
+      literalMedidaProducto: medidaProducto.literal,
+      colorId: color.id,
       manejadorPrecioId: manejadorPrecio.id,
       descripcionManejadorPrecio: manejadorPrecio.descripcion,
       tipoPrecio: manejadorPrecio.tipoPrecio,

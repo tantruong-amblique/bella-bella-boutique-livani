@@ -45,6 +45,8 @@ export const crearCompra = async (req: Request, res: Response) => {
       tipoProducto: buscarProducto.tipoProducto,
       unidadMedidaId: buscarProducto.unidadMedidaId,
       literal: buscarProducto.literal,
+      literalMedidaProducto: buscarProducto.literalMedidaProducto,
+      colorId: buscarProducto.colorId,
       manejadorPrecioId: buscarProducto.manejadorPrecioId,
       descripcionManejadorPrecio: buscarProducto.descripcionManejadorPrecio,
       tipoPrecio: buscarProducto.tipoPrecio,
@@ -61,11 +63,15 @@ export const crearCompra = async (req: Request, res: Response) => {
       almacenId: compra.almacenId,
       productoId: buscarProducto.productoId,
       literalUnidadMedida: unidadmedida!.literal,
+      literalMedidaProducto: buscarProducto.literalMedidaProducto,
+      colorId: buscarProducto.colorId
     })
     const historicoAlmacenDetalle = await HistoricoAlmacenDetalle.findOne({
       almacenId: compra.almacenId,
       productoId: buscarProducto.productoId,
       literalUnidadMedida: unidadmedida!.literal,
+      literalMedidaProducto: buscarProducto.literalMedidaProducto,
+      colorId: buscarProducto.colorId
     })
 
     if(!almacenDetalle){
@@ -79,6 +85,8 @@ export const crearCompra = async (req: Request, res: Response) => {
         managerPrecioId: buscarProducto.manejadorPrecioId,
         descripcionPrecio: buscarProducto.descripcionManejadorPrecio,
         literalUnidadMedida: unidadmedida!.literal,
+        literalMedidaProducto: buscarProducto.literalMedidaProducto,
+        colorId: buscarProducto.colorId,
         precioProducto: buscarProducto.precioProducto,
         sumatoriaPrecioProducto: buscarProducto.sumatoriaPrecioProducto!,
         fechaUltimaCompra: compra.fechaAlta!,
@@ -97,6 +105,8 @@ export const crearCompra = async (req: Request, res: Response) => {
         managerPrecioId: almacenDetalle2.managerPrecioId,
         descripcionPrecio: almacenDetalle2.descripcionPrecio,
         literalUnidadMedida: almacenDetalle2.literalUnidadMedida,
+        literalMedidaProducto: buscarProducto.literalMedidaProducto,
+        colorId: buscarProducto.colorId,
         precioProducto: almacenDetalle2.precioProducto,
         sumatoriaPrecioProducto: almacenDetalle2.sumatoriaPrecioProducto,
         fechaUltimaCompra: almacenDetalle2.fechaUltimaCompra,

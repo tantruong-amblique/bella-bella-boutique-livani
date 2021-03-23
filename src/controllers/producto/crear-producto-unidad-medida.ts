@@ -1,28 +1,36 @@
 import { Request, Response } from 'express';
 import { SolicitudIncorrecta } from '../../errores/solicitud-incorrecta';
+import { ColorImagen } from '../../models/color-imagen';
+import { MedidaPrecio } from '../../models/medida-precio';
 import { Producto } from '../../models/producto';
-import { UnidadMedida } from '../../models/unidad-medida';
 
 export const crearProductoUnidadMedida = async (req: Request, res: Response) => {
-  const unidadMedida = await UnidadMedida.findById(req.body.unidadMedidaId);
+  const medidaPrecio = await MedidaPrecio.findById(req.body.medidaPrecioId);
 
-  if (!unidadMedida) {
-    throw new SolicitudIncorrecta('La unidad de medida no existe');
-  }
-
-  const productoExistnte = await Producto.findOne({_id: req.body.productoId, unidadMedida });
-
-  if (productoExistnte) {
-    throw new SolicitudIncorrecta('La unidad de medida ya esta asociada a este producto');
+  if (!medidaPrecio) {
+    throw new SolicitudIncorrecta('El precio de esta medida no existe');
   }
   
-  const producto = await Producto.findById(req.body.productoId).populate('unidadMedida');
+  const colorImagen = await ColorImagen.findById(req.body.colorImagenId);
+
+  if (!colorImagen) {
+    throw new SolicitudIncorrecta('El color o la imagen no es valida');
+  }
+
+  const productoExistnte = await Producto.findOne({_id: req.body.productoId, medidaPrecio, colorImagen });
+
+  if (productoExistnte) {
+    throw new SolicitudIncorrecta('Este producto ya tiene asociado la imagen o la medida ingresada');
+  }
+  
+  const producto = await Producto.findById(req.body.productoId).populate('medidaPrecio').populate('colorImagen');
   
   if (!producto) {
     throw new SolicitudIncorrecta('El producto no existe');
   }
 
-  producto.unidadMedida!.push(unidadMedida);
+  producto.medidaPrecio!.push(medidaPrecio);
+  producto.colorImagen!.push(colorImagen);
   await producto.save();
   
   res.status(201).send(producto);

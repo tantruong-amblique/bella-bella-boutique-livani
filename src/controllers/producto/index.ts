@@ -6,9 +6,8 @@ const router = express.Router();
 
 export const indexProduto = async (req: Request, res: Response) => {
   const producto = await Producto.find()
-  .populate('unidadMedida')
-  .populate('medidaProducto')
-  .populate('manejadorPrecio');
+  .populate('medidaPrecio')
+  .populate('colorImagen');
     
   res.send(producto);
 }
