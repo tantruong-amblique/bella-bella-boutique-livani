@@ -4,9 +4,9 @@ import { MedidaPrecio } from '../../models/medida-precio';
 
 export const verManejadorPrecio = async (req: Request, res: Response) => {
     const medidaPrecio = await MedidaPrecio.findById(req.params.id)
-      .populate('unidadMedida')
-      .populate('DocumentoMedidaProducto')
-      .populate('DocManejadorPrecio')
+    .populate('unidadMedida')
+    .populate('medidaProducto')
+    .populate('manejadorPrecio');
 
     if (!medidaPrecio) {
       throw new ErrorNoEncontrado();

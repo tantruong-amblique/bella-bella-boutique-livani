@@ -7,7 +7,6 @@ interface AtribProducto {
   descripcion: [string];
   codigoBarra?: string;
   tipoProducto: string;
-  urlImagen?: string;
   tiendaId: string;
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
@@ -21,7 +20,6 @@ interface DocProducto extends mongoose.Document {
   descripcion: [string];
   codigoBarra?: string;
   tipoProducto: string;
-  urlImagen?: string;
   tiendaId: string;
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
@@ -54,9 +52,6 @@ const schemaProducto = new mongoose.Schema(
     tipoProducto: {
       type: String,
       required: true,
-    },
-    urlImagen: {
-      type: String,
     },
     tiendaId: {
       type: String,

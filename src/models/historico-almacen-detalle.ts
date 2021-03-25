@@ -127,6 +127,8 @@ schemaHistoricoAlmacenDetalle.statics.build = (atrib: AtribHistoricoAlmacenDetal
     managerPrecioId: atrib.managerPrecioId,
     descripcionPrecio: atrib.descripcionPrecio,
     literalUnidadMedida: atrib.literalUnidadMedida,
+    literalMedidaProducto: atrib.literalMedidaProducto,
+    colorId: atrib.colorId,
     precioProducto: atrib.precioProducto,
     sumatoriaPrecioProducto: atrib.sumatoriaPrecioProducto,
     fechaUltimaCompra: atrib.fechaUltimaCompra,

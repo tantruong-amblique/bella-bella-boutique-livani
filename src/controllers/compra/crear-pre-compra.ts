@@ -20,6 +20,7 @@ export const crearPreCompra = async (req: Request, res: Response) => {
     unidadMedidaId,
     MedidaProductoId,
     manjadorPrecioId,
+    ColorId,
     cantidadProducto,
   } = req.body;
   const EXPIRACION_VENTANA_SEGUNDOS = 1 * 60;
@@ -66,7 +67,7 @@ export const crearPreCompra = async (req: Request, res: Response) => {
     );
   }
 
-  const color = await Color.findById(MedidaProductoId);
+  const color = await Color.findById(ColorId);
   if (!color) {
     throw new SolicitudIncorrecta(
       'Este color no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'

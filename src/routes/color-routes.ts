@@ -18,7 +18,7 @@ router.post(
       .trim()
       .isLength({ min: 2, max: 160 })
       .withMessage('La descripcion de la unidad debe contener minimo de 1 caracteres y maxima de 160'),
-    body('color')
+    body('colorImagen')
       .not()
       .isEmpty()
       .withMessage('El color es requerido'),

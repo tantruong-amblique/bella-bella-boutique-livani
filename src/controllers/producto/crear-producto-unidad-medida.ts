@@ -23,7 +23,9 @@ export const crearProductoUnidadMedida = async (req: Request, res: Response) => 
     throw new SolicitudIncorrecta('Este producto ya tiene asociado la imagen o la medida ingresada');
   }
   
-  const producto = await Producto.findById(req.body.productoId).populate('medidaPrecio').populate('colorImagen');
+  const producto = await Producto.findById(req.body.productoId)  
+  .populate('medidaPrecio')
+  .populate('colorImagen');
   
   if (!producto) {
     throw new SolicitudIncorrecta('El producto no existe');

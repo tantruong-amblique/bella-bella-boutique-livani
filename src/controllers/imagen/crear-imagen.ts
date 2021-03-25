@@ -38,7 +38,9 @@ export const crearImagen = async (req: Request, res: Response) => {
   });
   await imagen.save();
 
-  let colorImagen = await ColorImagen.findOne({productoId: producto.id, color});
+  let colorImagen = await ColorImagen.findOne({productoId: producto.id, color})    
+  .populate('color')
+  .populate('imagen');
   
   if (!colorImagen) {
     colorImagen = ColorImagen.build({
@@ -54,9 +56,9 @@ export const crearImagen = async (req: Request, res: Response) => {
 
   await colorImagen.save();
 
-  const vistaColorImagen = ColorImagen.findById(colorImagen.id)
-    .populate('color')
-    .populate('imagen')
+  // const vistaColorImagen = ColorImagen.findById(colorImagen.id)
+  //   .populate('color')
+  //   .populate('imagen')
   
-  res.status(201).send(vistaColorImagen);
+  res.status(201).send(colorImagen);
 }

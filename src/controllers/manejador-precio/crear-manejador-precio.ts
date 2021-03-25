@@ -50,7 +50,10 @@ export const crearManejadorPrecio = async (req: Request, res: Response) => {
   });
   await manejadorPrecio.save();
 
-  let medidaPrecio = await MedidaPrecio.findOne({productoId: producto.id, unidadMedida, medidaProducto});
+  let medidaPrecio = await MedidaPrecio.findOne({productoId: producto.id, unidadMedida, medidaProducto})    
+  .populate('unidadMedida')
+  .populate('medidaProducto')
+  .populate('manejadorPrecio');
   
   if (!medidaPrecio) {
     medidaPrecio = MedidaPrecio.build({
@@ -67,10 +70,10 @@ export const crearManejadorPrecio = async (req: Request, res: Response) => {
 
   await medidaPrecio.save();
 
-  const vistaMedidaPrecio = MedidaPrecio.findById(medidaPrecio.id)
-    .populate('unidadMedida')
-    .populate('DocumentoMedidaProducto')
-    .populate('DocManejadorPrecio')
+  // const vistaMedidaPrecio = MedidaPrecio.findById(medidaPrecio.id)
+  //   .populate('unidadMedida')
+  //   .populate('DocumentoMedidaProducto')
+  //   .populate('DocManejadorPrecio')
   
-  res.status(201).send(vistaMedidaPrecio);
+  res.status(201).send(medidaPrecio);
 }

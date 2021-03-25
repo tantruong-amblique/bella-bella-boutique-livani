@@ -18,7 +18,6 @@ export const crearProducto = async (req: Request, res: Response) => {
     descripcion,
     codigoBarra,
     tipoProducto,
-    urlImagen,
     tiendaId: tienda.id,
     usuarioIdAlta: req.usuarioActual!.id,
     emailUsuarioAlta: req.usuarioActual!.email,
