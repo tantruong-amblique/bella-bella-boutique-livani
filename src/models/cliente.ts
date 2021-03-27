@@ -14,7 +14,7 @@ interface AtribCliente {
   fechaAlta?: Date;
 }
 
-interface DocumentoCliente extends mongoose.Document {
+export interface DocumentoCliente extends mongoose.Document {
   nombres: string;
   apellidos: string;
   telefono?: string;

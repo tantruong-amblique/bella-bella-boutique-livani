@@ -1,48 +1,48 @@
 import mongoose from 'mongoose';
-import { DocumentoProveedor } from './proveedor';
+import { EstadoCompra } from '../types/estado-compra';
+import { DocumentoCliente } from './cliente';
+import { DocumentoEstablecimiento } from './establecimiento';
 import { DocProductoCompra } from './producto-compra';
 import { DocumentoTienda } from './tienda';
-import { DocumentoEstablecimiento } from './establecimiento';
-import { EstadoCompra } from '../types/estado-compra';
 
-interface AtribCompra {
+interface AtribVenta {
   id?: string;
   tienda: DocumentoTienda;
   establecimiento: DocumentoEstablecimiento;
-  proveedor: DocumentoProveedor;
+  cliente: DocumentoCliente;
   estadoCompra?: EstadoCompra;
   producto: [DocProductoCompra];
   cantidadProducto?: number;
-  totalCompra: number;
+  totalVenta: number;
   expiracion: Date;
   facturaId?: string;
-  almacenId: string
+  stockId: string
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
 }
 
-export interface DocCompra extends mongoose.Document {
+export interface DocVenta extends mongoose.Document {
   tienda: DocumentoTienda;
   establecimiento: DocumentoEstablecimiento;
-  proveedor: DocumentoProveedor;
+  cliente: DocumentoCliente;
   estadoCompra?: EstadoCompra;
   producto: [DocProductoCompra];
   cantidadProducto?: number;
-  totalCompra: number;
+  totalVenta: number;
   expiracion: Date;
   facturaId?: string;
-  almacenId: string
+  stockId: string
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
 }
 
-interface ModelCompra extends mongoose.Model<DocCompra> {
-  build(atrib: AtribCompra): DocCompra;
+interface ModelVenta extends mongoose.Model<DocVenta> {
+  build(atrib: AtribVenta): DocVenta;
 }
 
-const schemaCompra = new mongoose.Schema(
+const schemaVenta = new mongoose.Schema(
   {
     tienda: {
       type: mongoose.Schema.Types.ObjectId,
@@ -52,9 +52,9 @@ const schemaCompra = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Establecimiento',
     },
-    proveedor: {
+    cliente: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Proveedor',
+      ref: 'Cliente',
     },
     estadoCompra: {
       type: String,
@@ -73,7 +73,7 @@ const schemaCompra = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    totalCompra: {
+    totalVenta: {
       type: Number,
       required: true,
       default: 0,
@@ -84,7 +84,7 @@ const schemaCompra = new mongoose.Schema(
     facturaId: {
       type: String,
     },
-    almacenId: {
+    stockId: {
       type: String,
       required: true,
     },
@@ -109,24 +109,24 @@ const schemaCompra = new mongoose.Schema(
   }
 );
 
-schemaCompra.statics.build = (atrib: AtribCompra) => {
-  return new Compra({
+schemaVenta.statics.build = (atrib: AtribVenta) => {
+  return new Venta({
     _id: atrib.id,
     tienda: atrib.tienda,
     establecimiento: atrib.establecimiento,
-    proveedor: atrib.proveedor,
+    cliente: atrib.cliente,
     estadoCompra: atrib.estadoCompra,
     producto: atrib.producto,
     cantidadProducto: atrib.cantidadProducto,
-    totalCompra: atrib.totalCompra,
+    totalVenta: atrib.totalVenta,
     expiracion: atrib.expiracion,
     facturaId: atrib.facturaId,
-    almacenId: atrib.almacenId,
+    stockId: atrib.stockId,
     usuarioIdAlta: atrib.usuarioIdAlta,
     emailUsuarioAlta: atrib.emailUsuarioAlta,
   });
 };
 
-const Compra = mongoose.model<DocCompra, ModelCompra>('Compra', schemaCompra);
+const Venta = mongoose.model<DocVenta, ModelVenta>('Venta', schemaVenta);
 
-export { Compra };
+export { Venta };

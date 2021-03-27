@@ -1,60 +1,57 @@
 import mongoose from 'mongoose';
-import { DocumentoProveedor } from './proveedor';
-import { DocProductoCompra } from './producto-compra';
+import { DocProductoCompra } from './producto-compraTMP';
 import { DocumentoTienda } from './tienda';
 import { DocumentoEstablecimiento } from './establecimiento';
+import { DocumentoCliente } from './cliente';
 import { EstadoCompra } from '../types/estado-compra';
 
-interface AtribCompra {
-  id?: string;
+interface AtribVentaTMP {
   tienda: DocumentoTienda;
   establecimiento: DocumentoEstablecimiento;
-  proveedor: DocumentoProveedor;
+  cliente: DocumentoCliente;
   estadoCompra?: EstadoCompra;
-  producto: [DocProductoCompra];
-  cantidadProducto?: number;
-  totalCompra: number;
+  productoCompraTMP: [DocProductoCompra];
+  contadorProducto: number;
+  totalVenta?: number;
   expiracion: Date;
-  facturaId?: string;
-  almacenId: string
+  stockId: string
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
 }
 
-export interface DocCompra extends mongoose.Document {
+interface DocVentaTMP extends mongoose.Document {
   tienda: DocumentoTienda;
   establecimiento: DocumentoEstablecimiento;
-  proveedor: DocumentoProveedor;
+  cliente: DocumentoCliente;
   estadoCompra?: EstadoCompra;
-  producto: [DocProductoCompra];
-  cantidadProducto?: number;
-  totalCompra: number;
+  productoCompraTMP: [DocProductoCompra];
+  contadorProducto: number;
+  totalVenta?: number;
   expiracion: Date;
-  facturaId?: string;
-  almacenId: string
+  stockId: string
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
   fechaAlta?: Date;
 }
 
-interface ModelCompra extends mongoose.Model<DocCompra> {
-  build(atrib: AtribCompra): DocCompra;
+interface ModelVentaTMP extends mongoose.Model<DocVentaTMP> {
+  build(atrib: AtribVentaTMP): DocVentaTMP;
 }
 
-const schemaCompra = new mongoose.Schema(
+const schemaVentaTMP = new mongoose.Schema(
   {
     tienda: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Empresa',
+      ref: 'Tienda',
     },
     establecimiento: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Establecimiento',
     },
-    proveedor: {
+    cliente: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Proveedor',
+      ref: 'Cliente',
     },
     estadoCompra: {
       type: String,
@@ -62,18 +59,18 @@ const schemaCompra = new mongoose.Schema(
       enum: Object.values(EstadoCompra),
       default: EstadoCompra.Creada,
     },
-    producto: [
+    productoCompraTMP: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ProductoCompra',
+        ref: 'ProductoCompraTMP',
       },
     ],
-    cantidadProducto: {
+    contadorProducto: {
       type: Number,
       required: true,
       default: 0,
     },
-    totalCompra: {
+    totalVenta: {
       type: Number,
       required: true,
       default: 0,
@@ -81,10 +78,7 @@ const schemaCompra = new mongoose.Schema(
     expiracion: {
       type: mongoose.Schema.Types.Date,
     },
-    facturaId: {
-      type: String,
-    },
-    almacenId: {
+    stockId: {
       type: String,
       required: true,
     },
@@ -109,24 +103,13 @@ const schemaCompra = new mongoose.Schema(
   }
 );
 
-schemaCompra.statics.build = (atrib: AtribCompra) => {
-  return new Compra({
-    _id: atrib.id,
-    tienda: atrib.tienda,
-    establecimiento: atrib.establecimiento,
-    proveedor: atrib.proveedor,
-    estadoCompra: atrib.estadoCompra,
-    producto: atrib.producto,
-    cantidadProducto: atrib.cantidadProducto,
-    totalCompra: atrib.totalCompra,
-    expiracion: atrib.expiracion,
-    facturaId: atrib.facturaId,
-    almacenId: atrib.almacenId,
-    usuarioIdAlta: atrib.usuarioIdAlta,
-    emailUsuarioAlta: atrib.emailUsuarioAlta,
-  });
+schemaVentaTMP.statics.build = (atrib: AtribVentaTMP) => {
+  return new VentaTMP(atrib);
 };
 
-const Compra = mongoose.model<DocCompra, ModelCompra>('Compra', schemaCompra);
+const VentaTMP = mongoose.model<DocVentaTMP, ModelVentaTMP>(
+  'ventaTMP',
+  schemaVentaTMP
+);
 
-export { Compra };
+export { VentaTMP };

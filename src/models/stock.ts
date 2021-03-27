@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface AtribAlmacen {
+export interface AtribStock {
   descripcion: string;
   tiendaId: string;
   establecimientoId: string;
@@ -9,7 +9,7 @@ export interface AtribAlmacen {
   fechaAlta?: Date;
 }
 
-export interface DocAlmacen extends mongoose.Document {
+export interface DocStock extends mongoose.Document {
   descripcion: string;
   tiendaId: string;
   establecimientoId: string;
@@ -18,11 +18,11 @@ export interface DocAlmacen extends mongoose.Document {
   fechaAlta?: Date;
 }
 
-interface ModelAlmacen extends mongoose.Model<DocAlmacen> {
-  build(atrib: AtribAlmacen): DocAlmacen;
+interface ModelStock extends mongoose.Model<DocStock> {
+  build(atrib: AtribStock): DocStock;
 }
 
-const schemaAlmacen = new mongoose.Schema(
+const schemaStock = new mongoose.Schema(
   {
     descripcion: {
       type: String,
@@ -59,13 +59,13 @@ const schemaAlmacen = new mongoose.Schema(
   }
 );
 
-schemaAlmacen.statics.build = (atrib: AtribAlmacen) => {
-  return new Almacen(atrib);
+schemaStock.statics.build = (atrib: AtribStock) => {
+  return new Stock(atrib);
 };
 
-const Almacen = mongoose.model<DocAlmacen, ModelAlmacen>(
-  'Almacen',
-  schemaAlmacen
+const Stock = mongoose.model<DocStock, ModelStock>(
+  'Stock',
+  schemaStock
 );
 
-export { Almacen };
+export { Stock };

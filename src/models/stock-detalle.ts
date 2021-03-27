@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-export interface AtribAlmacenDetalle {
-  almacenId: string;
+export interface AtribStockDetalle {
+  stockId: string;
   productoId: string;
   nombreProducto: string;
   cantidad: number;
@@ -18,8 +18,8 @@ export interface AtribAlmacenDetalle {
   usuarioUltimaCompra: string;
 }
 
-export interface DocAlmacenDetalle extends mongoose.Document {
-  almacenId: string;
+export interface DocStockDetalle extends mongoose.Document {
+  stockId: string;
   productoId: string;
   nombreProducto: string;
   cantidad: number;
@@ -36,13 +36,13 @@ export interface DocAlmacenDetalle extends mongoose.Document {
   usuarioUltimaCompra: string;
 }
 
-interface ModelAlmacenDetalle extends mongoose.Model<DocAlmacenDetalle> {
-  build(atrib: AtribAlmacenDetalle): DocAlmacenDetalle;
+interface ModelStockDetalle extends mongoose.Model<DocStockDetalle> {
+  build(atrib: AtribStockDetalle): DocStockDetalle;
 }
 
-const schemaAlmacenDetalle = new mongoose.Schema(
+const schemaStockDetalle = new mongoose.Schema(
   {
-    almacenId: {
+    stockId: {
       type: String,
       required: true,
     },
@@ -114,13 +114,13 @@ const schemaAlmacenDetalle = new mongoose.Schema(
   }
 );
 
-schemaAlmacenDetalle.statics.build = (atrib: AtribAlmacenDetalle) => {
-  return new AlmacenDetalle(atrib);
+schemaStockDetalle.statics.build = (atrib: AtribStockDetalle) => {
+  return new StockDetalle(atrib);
 };
 
-const AlmacenDetalle = mongoose.model<DocAlmacenDetalle, ModelAlmacenDetalle>(
-  'AlmacenDetalle',
-  schemaAlmacenDetalle
+const StockDetalle = mongoose.model<DocStockDetalle, ModelStockDetalle>(
+  'StockDetalle',
+  schemaStockDetalle
 );
 
-export { AlmacenDetalle };
+export { StockDetalle };

@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
-export interface AtribAlmacenDetalle {
-  almacenId: string;
+export interface AtribHistoricoStockDetalle {
+  id: string;
+  stockId: string;
   productoId: string;
   nombreProducto: string;
   cantidad: number;
@@ -18,8 +19,8 @@ export interface AtribAlmacenDetalle {
   usuarioUltimaCompra: string;
 }
 
-export interface DocAlmacenDetalle extends mongoose.Document {
-  almacenId: string;
+export interface DocHistoricoStockDetalle extends mongoose.Document {
+  stockId: string;
   productoId: string;
   nombreProducto: string;
   cantidad: number;
@@ -36,13 +37,13 @@ export interface DocAlmacenDetalle extends mongoose.Document {
   usuarioUltimaCompra: string;
 }
 
-interface ModelAlmacenDetalle extends mongoose.Model<DocAlmacenDetalle> {
-  build(atrib: AtribAlmacenDetalle): DocAlmacenDetalle;
+interface ModelHistoricoStockDetalle extends mongoose.Model<DocHistoricoStockDetalle> {
+  build(atrib: AtribHistoricoStockDetalle): DocHistoricoStockDetalle;
 }
 
-const schemaAlmacenDetalle = new mongoose.Schema(
+const schemaHistoricoStockDetalle = new mongoose.Schema(
   {
-    almacenId: {
+    stockId: {
       type: String,
       required: true,
     },
@@ -114,13 +115,30 @@ const schemaAlmacenDetalle = new mongoose.Schema(
   }
 );
 
-schemaAlmacenDetalle.statics.build = (atrib: AtribAlmacenDetalle) => {
-  return new AlmacenDetalle(atrib);
+schemaHistoricoStockDetalle.statics.build = (atrib: AtribHistoricoStockDetalle) => {
+  return new HistoricoStockDetalle({
+    _id: atrib.id,
+    stockId: atrib.stockId,
+    productoId: atrib.productoId,
+    nombreProducto: atrib.nombreProducto,
+    cantidad: atrib.cantidad,
+    tipoProducto: atrib.tipoProducto,
+    tipoPrecio: atrib.tipoPrecio,
+    managerPrecioId: atrib.managerPrecioId,
+    descripcionPrecio: atrib.descripcionPrecio,
+    literalUnidadMedida: atrib.literalUnidadMedida,
+    literalMedidaProducto: atrib.literalMedidaProducto,
+    colorId: atrib.colorId,
+    precioProducto: atrib.precioProducto,
+    sumatoriaPrecioProducto: atrib.sumatoriaPrecioProducto,
+    fechaUltimaCompra: atrib.fechaUltimaCompra,
+    usuarioUltimaCompra: atrib.usuarioUltimaCompra,
+  });
 };
 
-const AlmacenDetalle = mongoose.model<DocAlmacenDetalle, ModelAlmacenDetalle>(
-  'AlmacenDetalle',
-  schemaAlmacenDetalle
+const HistoricoStockDetalle = mongoose.model<DocHistoricoStockDetalle, ModelHistoricoStockDetalle>(
+  'HistoricoStockDetalle',
+  schemaHistoricoStockDetalle
 );
 
-export { AlmacenDetalle };
+export { HistoricoStockDetalle };
