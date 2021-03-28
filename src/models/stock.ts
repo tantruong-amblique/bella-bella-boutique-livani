@@ -28,6 +28,7 @@ const schemaStock = new mongoose.Schema(
       type: String,
       required: true,
       lowercase: true,
+      unique: true
     },
     tiendaId: {
       type: String,

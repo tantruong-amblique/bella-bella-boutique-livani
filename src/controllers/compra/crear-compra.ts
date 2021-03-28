@@ -17,7 +17,7 @@ export const crearCompra = async (req: Request, res: Response) => {
   );
   if (!compraTMP) {
     throw new SolicitudIncorrecta(
-      'Esta compra no existe.'
+      'Esta compra es invalida.'
     );
   }
   const compra = Compra.build({
@@ -36,7 +36,6 @@ export const crearCompra = async (req: Request, res: Response) => {
   });
   for (let buscarCompra in compraTMP.productoCompraTMP) {
     let buscarProducto = compraTMP.productoCompraTMP[buscarCompra];
-    let unidadmedida = await UnidadMedida.findById(buscarProducto.unidadMedidaId);
 
     const productoCompra = ProductoCompra.build({
       id: buscarProducto.id,
@@ -62,14 +61,14 @@ export const crearCompra = async (req: Request, res: Response) => {
     const almacenDetalle = await AlmacenDetalle.findOne({
       almacenId: compra.almacenId,
       productoId: buscarProducto.productoId,
-      literalUnidadMedida: unidadmedida!.literal,
+      literalUnidadMedida: buscarProducto.literal,
       literalMedidaProducto: buscarProducto.literalMedidaProducto,
       colorId: buscarProducto.colorId
     })
     const historicoAlmacenDetalle = await HistoricoAlmacenDetalle.findOne({
       almacenId: compra.almacenId,
       productoId: buscarProducto.productoId,
-      literalUnidadMedida: unidadmedida!.literal,
+      literalUnidadMedida: buscarProducto.literal,
       literalMedidaProducto: buscarProducto.literalMedidaProducto,
       colorId: buscarProducto.colorId
     })
@@ -84,7 +83,7 @@ export const crearCompra = async (req: Request, res: Response) => {
         tipoPrecio: buscarProducto.tipoPrecio,
         managerPrecioId: buscarProducto.manejadorPrecioId,
         descripcionPrecio: buscarProducto.descripcionManejadorPrecio,
-        literalUnidadMedida: unidadmedida!.literal,
+        literalUnidadMedida: buscarProducto.literal,
         literalMedidaProducto: buscarProducto.literalMedidaProducto,
         colorId: buscarProducto.colorId,
         precioProducto: buscarProducto.precioProducto,
@@ -159,9 +158,9 @@ export const crearCompra = async (req: Request, res: Response) => {
 
   const compraFinal = await Compra.findById(compra.id)
     .populate('producto')
-    .populate('empresa')
+    .populate('tienda')
     .populate('establecimiento')
     .populate('proveedor');
 
-  res.send(compraFinal);
+  res.status(201).send(compraFinal);
 }

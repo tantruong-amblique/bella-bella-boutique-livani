@@ -4,7 +4,7 @@ import { Compra } from '../../models/compra';
 export const indexCompra = async (req: Request, res: Response) => {
   const compra = await Compra.find()
     .populate('producto')
-    .populate('empresa')
+    .populate('tienda')
     .populate('establecimiento')
     .populate('proveedor');
 

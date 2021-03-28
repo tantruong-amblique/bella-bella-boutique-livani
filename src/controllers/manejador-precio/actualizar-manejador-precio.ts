@@ -11,8 +11,7 @@ export const actualizarManejadorPrecio = async (req: Request, res: Response) => 
 
   manejadorPrecio.set({
     descripcion: req.body.descripcion,
-    tipoPrecio: req.body.tipoPrecio,
-    precio: req.body.precio,
+    porcientoDescuento: req.body.porcientoDescuento,
   });
   await manejadorPrecio.save();
   

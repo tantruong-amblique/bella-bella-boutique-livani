@@ -11,6 +11,7 @@ export const crearManejadorPrecio = async (req: Request, res: Response) => {
     descripcion,
     tipoPrecio,
     precio,
+    porcientoDescuento,
     unidadMedidaId,
     medidaProductoId,
     productoId,
@@ -47,6 +48,7 @@ export const crearManejadorPrecio = async (req: Request, res: Response) => {
     descripcion,
     tipoPrecio,
     precio,
+    porcientoDescuento
   });
   await manejadorPrecio.save();
 

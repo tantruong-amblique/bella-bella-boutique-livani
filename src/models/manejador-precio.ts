@@ -7,6 +7,7 @@ interface AtribManejadorPrecio {
   descripcion: string;
   tipoPrecio: string;
   precio: number;
+  porcientoDescuento?: number;
   estado?: boolean;
 }
 
@@ -17,6 +18,7 @@ export interface DocManejadorPrecio extends mongoose.Document {
   descripcion: string;
   tipoPrecio: string;
   precio: number;
+  porcientoDescuento?: number
   estado?: boolean;
 }
 
@@ -46,10 +48,15 @@ const schemaManejadorPrecio = new mongoose.Schema(
     tipoPrecio: {
       type: String,
       required: true,
+      lowercase: true,
     },
     precio: {
       type: Number,
       required: true,
+    },
+    porcientoDescuento: {
+      type: Number,
+      default: 0
     },
     estado: {
       type: Boolean,

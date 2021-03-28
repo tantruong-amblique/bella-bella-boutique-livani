@@ -173,7 +173,7 @@ export const crearPreCompra = async (req: Request, res: Response) => {
   
   const compraTemporal = await CompraTMP.findById(compraTMP.id)
     .populate('productoCompraTMP')
-    .populate('empresa')
+    .populate('tienda')
     .populate('establecimiento')
     .populate('proveedor');
     

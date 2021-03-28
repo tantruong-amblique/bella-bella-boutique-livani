@@ -14,7 +14,7 @@ export interface AtribStockDetalle {
   colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
-  fechaUltimaCompra: Date;
+  fechaUltimaConversion?: Date;
   usuarioUltimaCompra: string;
 }
 
@@ -32,7 +32,7 @@ export interface DocStockDetalle extends mongoose.Document {
   colorId: string;
   precioProducto: number;
   sumatoriaPrecioProducto: number;
-  fechaUltimaCompra: Date;
+  fechaUltimaConversion?: Date;
   usuarioUltimaCompra: string;
 }
 
@@ -94,9 +94,9 @@ const schemaStockDetalle = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    fechaUltimaCompra: {
-      type: Date,
-      required: true,
+    fechaUltimaConversion: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now,
     },
     usuarioUltimaCompra: {
       type: String,

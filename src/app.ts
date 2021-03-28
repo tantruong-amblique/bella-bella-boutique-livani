@@ -6,19 +6,21 @@ import { usuarioActual } from './middlewares/usuario-actual'
 import { ErrorNoEncontrado } from './errores/error-no-encontrado'
 import { controladorError } from './middlewares/controlador-error'
 
-import { usuarioRouter } from './routes/usuario-routes';
-import { tiendaRouter } from './routes/tienda-routes';
-import { establecimientoRouter } from './routes/establecimiento-routes';
-import { clienteRouter } from './routes/cliente-routes';
-import { proveedorRouter } from './routes/proveedor-routes';
-import { unidadMedidaRouter } from './routes/unidad-medida-routes';
-import { productoRouter } from './routes/producto-routes';
-import { manejadorPrecioRouter } from './routes/manejador-precio-routes';
 import { almacenRouter } from './routes/almacen-routes';
-import { compraRouter } from './routes/compra-routes';
+import { clienteRouter } from './routes/cliente-routes';
 import { colorRouter } from './routes/color-routes';
-import { medidaProductoRouter } from './routes/medida-producto-routes';
+import { compraRouter } from './routes/compra-routes';
+import { establecimientoRouter } from './routes/establecimiento-routes';
 import { imagenRouter } from './routes/imagen-routes';
+import { manejadorPrecioRouter } from './routes/manejador-precio-routes';
+import { medidaProductoRouter } from './routes/medida-producto-routes';
+import { productoRouter } from './routes/producto-routes';
+import { proveedorRouter } from './routes/proveedor-routes';
+import { stockRouter } from './routes/stock-routes'
+import { tiendaRouter } from './routes/tienda-routes';
+import { unidadMedidaRouter } from './routes/unidad-medida-routes';
+import { usuarioRouter } from './routes/usuario-routes';
+import { ventaRouter } from './routes/venta-routes'
 
 const app = express();
 app.set('trust proxy', true);
@@ -33,44 +35,50 @@ app.use(
 
 app.use(usuarioActual);
 
-//Routes de usuario
-app.use(usuarioRouter);
-
-//Routes de tienda
-app.use(tiendaRouter);
-
-//Routes de establecimiento
-app.use(establecimientoRouter);
-
-//Routes de cliente
-app.use(clienteRouter);
-
-//Routes de proveedor
-app.use(proveedorRouter);
-
-//Routes de unidad de medida
-app.use(unidadMedidaRouter);
-
-//Routes de producto
-app.use(productoRouter);
-
-//Routes de manejador de precios
-app.use(manejadorPrecioRouter);
-
-//Routes de almacen
+//Routes Almacen
 app.use(almacenRouter);
 
-//Routes de compra
-app.use(compraRouter);
+//Routes Cliente
+app.use(clienteRouter);
 
-//Routes de color
+//Routes Color
 app.use(colorRouter);
 
-//Routes de medida de producto
+//Routes Compra
+app.use(compraRouter);
+
+//Routes Establecimiento
+app.use(establecimientoRouter);
+
+//Routes Imagen
+app.use(imagenRouter);
+
+//Routes Manejador de Precio
+app.use(manejadorPrecioRouter);
+
+//Routes Medida de Producto 
 app.use(medidaProductoRouter);
 
-//Routes de imagen
-app.use(imagenRouter);
+//Routes Producto
+app.use(productoRouter);
+
+//Routes Proveedor
+app.use(proveedorRouter);
+
+//Routes Stock
+app.use(stockRouter);
+
+//Routes Tienda
+app.use(tiendaRouter);
+
+//Routes Unidad de medida
+app.use(unidadMedidaRouter);
+
+//Routes Usuario
+app.use(usuarioRouter);
+
+//Routes Venta
+app.use(ventaRouter);
 
 app.all('*', async (req, res) => {
   throw new ErrorNoEncontrado();
