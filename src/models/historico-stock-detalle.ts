@@ -131,7 +131,7 @@ schemaHistoricoStockDetalle.statics.build = (atrib: AtribHistoricoStockDetalle) 
     colorId: atrib.colorId,
     precioProducto: atrib.precioProducto,
     sumatoriaPrecioProducto: atrib.sumatoriaPrecioProducto,
-    fechaUltimaCompra: atrib.fechaUltimaCompra,
+    fechaUltimaConversion: atrib.fechaUltimaConversion,
     usuarioUltimaCompra: atrib.usuarioUltimaCompra,
   });
 };
