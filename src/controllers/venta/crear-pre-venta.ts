@@ -7,6 +7,7 @@ import { ManejadorPrecio } from '../../models/manejador-precio';
 import { MedidaProducto } from '../../models/medida-producto';
 import { Producto } from '../../models/producto';
 import { ProductoCompraTMP } from '../../models/producto-compraTMP';
+import { StockDetalle } from '../../models/stock-detalle';
 import { Tienda } from '../../models/tienda';
 import { UnidadMedida } from '../../models/unidad-medida';
 import { VentaTMP } from '../../models/ventaTMP';
@@ -20,11 +21,40 @@ export const crearPreVenta = async (req: Request, res: Response) => {
       unidadMedidaId,
       MedidaProductoId,
       manjadorPrecioId,
-      ColorId,
+      colorId,
       cantidadProducto,
     } = req.body;
     const EXPIRACION_VENTANA_SEGUNDOS = 1 * 60;
 
+    const unidadMedida = await UnidadMedida.findById(unidadMedidaId);
+    if (!unidadMedida) {
+      throw new SolicitudIncorrecta(
+        'Esta unidad de medida no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
+      );
+    }
+    
+    const medidaProducto = await MedidaProducto.findById(MedidaProductoId);
+    if (!medidaProducto) {
+      throw new SolicitudIncorrecta(
+        'Esta medida no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
+      );
+    }
+  
+    const stockDetalle = await StockDetalle.findOne(
+      {
+        stockId,
+        productoId,
+        colorId,
+        literalUnidadMedida: unidadMedida.literal,
+        literalMedidaProducto: medidaProducto.literal
+      })
+
+    if (stockDetalle!.cantidad < cantidadProducto) {
+      throw new SolicitudIncorrecta(
+        'Lo sentimos pero la cantidad ingresada es mayor al disponible.'
+      );
+    }
+      
     const tienda = await Tienda.findOne({ nombreTienda: 'bella bella boutique' });
     if (!tienda) {
       throw new SolicitudIncorrecta(
@@ -53,21 +83,7 @@ export const crearPreVenta = async (req: Request, res: Response) => {
       );
     }
 
-    const unidadMedida = await UnidadMedida.findById(unidadMedidaId);
-    if (!unidadMedida) {
-      throw new SolicitudIncorrecta(
-        'Esta unidad de medida no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
-      );
-    }
-    
-    const medidaProducto = await MedidaProducto.findById(MedidaProductoId);
-    if (!medidaProducto) {
-      throw new SolicitudIncorrecta(
-        'Esta medida no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'
-      );
-    }
-  
-    const color = await Color.findById(ColorId);
+    const color = await Color.findById(colorId);
     if (!color) {
       throw new SolicitudIncorrecta(
         'Este color no existe favor intentar nuevamente o ponerse en contacto con servicio al cliente'

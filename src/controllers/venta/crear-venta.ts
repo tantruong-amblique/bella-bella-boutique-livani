@@ -68,76 +68,29 @@ export const crearCliente = async (req: Request, res: Response) => {
         literalMedidaProducto: productoEncontrado.literalMedidaProducto,
         colorId: productoEncontrado.colorId
       })
-      const historicoStockDetalle = await HistoricoStockDetalle.findOne({
-        stockId: venta.stockId,
-        productoId: productoEncontrado.productoId,
-        literalUnidadMedida: productoEncontrado.literal,
-        literalMedidaProducto: productoEncontrado.literalMedidaProducto,
-        colorId: productoEncontrado.colorId
-      })
   
-      if(!stockDetalle){
-        const stockDetalle2 = StockDetalle.build({
-          stockId: venta.stockId,
-          productoId: productoEncontrado.productoId,
-          nombreProducto: productoEncontrado.descripcionProducto,
-          cantidad: productoEncontrado.cantidadProducto,
-          tipoProducto: productoEncontrado.tipoProducto,
-          tipoPrecio: productoEncontrado.tipoPrecio,
-          managerPrecioId: productoEncontrado.manejadorPrecioId,
-          descripcionPrecio: productoEncontrado.descripcionManejadorPrecio,
-          literalUnidadMedida: productoEncontrado.literal,
-          literalMedidaProducto: productoEncontrado.literalMedidaProducto,
-          colorId: productoEncontrado.colorId,
-          precioProducto: productoEncontrado.precioProducto,
-          sumatoriaPrecioProducto: productoEncontrado.sumatoriaPrecioProducto!,
-          fechaUltimaConversion: venta.fechaAlta!,
-          usuarioUltimaCompra: venta.emailUsuarioAlta!,
-        });
-        await stockDetalle2.save();
-  
-        const historicoStockDetalle2 = HistoricoStockDetalle.build({
-          id: stockDetalle2.id,
-          stockId: stockDetalle2.stockId,
-          productoId: stockDetalle2.productoId,
-          nombreProducto: stockDetalle2.nombreProducto,
-          cantidad: stockDetalle2.cantidad,
-          tipoProducto: stockDetalle2.tipoProducto,
-          tipoPrecio: stockDetalle2.tipoPrecio,
-          managerPrecioId: stockDetalle2.managerPrecioId,
-          descripcionPrecio: stockDetalle2.descripcionPrecio,
-          literalUnidadMedida: stockDetalle2.literalUnidadMedida,
-          literalMedidaProducto: stockDetalle2.literalMedidaProducto,
-          colorId: stockDetalle2.colorId,
-          precioProducto: stockDetalle2.precioProducto,
-          sumatoriaPrecioProducto: stockDetalle2.sumatoriaPrecioProducto,
-          fechaUltimaConversion: stockDetalle2.fechaUltimaConversion,
-          usuarioUltimaCompra: stockDetalle2.usuarioUltimaCompra,
-        });
-        await historicoStockDetalle2.save();
-  
-      }else{
-        const cantidadAux = stockDetalle.cantidad;
-        const sumatoriaPrecioProductoAux = stockDetalle.sumatoriaPrecioProducto;
-        stockDetalle.set({
-          cantidad: cantidadAux + productoEncontrado.cantidadProducto,
-          precioProducto: productoEncontrado.precioProducto,
-          sumatoriaPrecioProducto: sumatoriaPrecioProductoAux + productoEncontrado.sumatoriaPrecioProducto!,
-          fechaUltimaCompra: venta.fechaAlta!,
-          usuarioUltimaCompra: venta.emailUsuarioAlta!,
-        })
-        await stockDetalle.save();
-  
-        historicoStockDetalle!.set({
-          cantidad: stockDetalle.cantidad,
-          precioProducto: stockDetalle.precioProducto,
-          sumatoriaPrecioProducto: stockDetalle.sumatoriaPrecioProducto,
-          fechaUltimaConversion: stockDetalle.fechaUltimaConversion,
-          usuarioUltimaCompra: stockDetalle.usuarioUltimaCompra,
-        });
-        await historicoStockDetalle!.save()
-  
+      if(!stockDetalle || stockDetalle.cantidad == 0){
+        throw new SolicitudIncorrecta(
+          'El stock esta vacio o es invalido.'
+        );
+      }  
+      
+      if (stockDetalle!.cantidad < productoEncontrado.cantidadProducto) {
+        throw new SolicitudIncorrecta(
+          'Lo sentimos pero la cantidad ingresada es mayor al disponible.'
+        );
       }
+
+      const cantidadAux = stockDetalle.cantidad;
+      const sumatoriaPrecioProductoAux = stockDetalle.sumatoriaPrecioProducto;
+      stockDetalle.set({
+        cantidad: cantidadAux - productoEncontrado.cantidadProducto,
+        precioProducto: productoEncontrado.precioProducto,
+        sumatoriaPrecioProducto: sumatoriaPrecioProductoAux - productoEncontrado.sumatoriaPrecioProducto!,
+        fechaUltimaCompra: venta.fechaAlta!,
+        usuarioUltimaCompra: venta.emailUsuarioAlta!,
+      })
+      await stockDetalle.save();
   
       ProductoCompraTMP.findOne({ _id: productoEncontrado.id }).remove().exec();
     }
@@ -148,7 +101,7 @@ export const crearCliente = async (req: Request, res: Response) => {
 
     const factura = FacturaVenta.build({
       venta,
-      tipoFactura: 'compra',
+      tipoFactura: 'venta',
     });
   
     await factura.save();

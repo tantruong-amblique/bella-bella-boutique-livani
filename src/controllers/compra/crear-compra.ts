@@ -7,7 +7,6 @@ import { FacturaCompra } from '../../models/factura-compra';
 import { HistoricoAlmacenDetalle } from '../../models/historico-almacen-detalle';
 import { ProductoCompra } from '../../models/producto-compra';
 import { ProductoCompraTMP } from '../../models/producto-compraTMP';
-import { UnidadMedida } from '../../models/unidad-medida';
 import { EstadoCompra } from '../../types/estado-compra';
 
 export const crearCompra = async (req: Request, res: Response) => {

@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import { indexManejadorPrecio } from "../controllers/manejador-precio";
 import { actualizarManejadorPrecio } from "../controllers/manejador-precio/actualizar-manejador-precio";
 import { crearManejadorPrecio } from "../controllers/manejador-precio/crear-manejador-precio";
-import { verManejadorPrecio } from "../controllers/manejador-precio/ver-productos-empresa";
+import { verManejadorPrecio } from "../controllers/manejador-precio/ver-manejador-precio";
 import { requireAuth } from "../middlewares/autorizacion-requerida";
 import { validarSolicitud } from "../middlewares/validar-solicitud";
 

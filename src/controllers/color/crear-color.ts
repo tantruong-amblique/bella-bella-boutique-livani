@@ -13,7 +13,7 @@ export const registrarColor = async (req: Request, res: Response) => {
 
     const color = Color.build({ 
       descripcion,
-      color: colorImagen,
+      colorUrl: colorImagen,
       tiendaId: tienda!.id,
       usuarioIdAlta: req.usuarioActual!.id,
       emailUsuarioAlta: req.usuarioActual!.email 

@@ -60,5 +60,5 @@ export const registrarAlmacen = async (req: Request, res: Response) => {
     });
     await historicoStock.save();
 
-    res.status(201).send(almacen);
+    res.status(201).send({AlmacenStock: {almacen, stock}});
 }

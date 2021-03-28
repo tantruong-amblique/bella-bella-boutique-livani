@@ -46,7 +46,7 @@ const schemaVenta = new mongoose.Schema(
   {
     tienda: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Empresa',
+      ref: 'Tienda',
     },
     establecimiento: {
       type: mongoose.Schema.Types.ObjectId,

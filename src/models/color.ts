@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 interface AtribColor {
   descripcion: string;
-  color: string;
+  colorUrl: string;
   tiendaId: string;
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
@@ -11,7 +11,7 @@ interface AtribColor {
 
 export interface DocumentoColor extends mongoose.Document {
   descripcion: string;
-  color: string;
+  colorUrl: string;
   tiendaId: string;
   usuarioIdAlta?: string;
   emailUsuarioAlta?: string;
@@ -29,7 +29,7 @@ const SchemaColor = new mongoose.Schema(
       required: true,
       lowercase: true,
     },
-    color: {
+    colorUrl: {
       type: String,
       required: true,
     },
